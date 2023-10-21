@@ -11,7 +11,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "localhost:3000",
     "basePath": "/",
     "paths": {
         "/api/v1/cat/add": {
@@ -70,6 +70,38 @@
                     }
                 }
             }
+        },
+        "/api/v1/cat/{id}": {
+            "get": {
+                "description": "Get cat by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cat"
+                ],
+                "summary": "Get cat by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "cat id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.Cat"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -85,10 +117,16 @@
                 "color": {
                     "type": "string"
                 },
+                "createdAt": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
                     "type": "string"
                 }
             }

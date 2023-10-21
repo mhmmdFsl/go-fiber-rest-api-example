@@ -8,9 +8,13 @@ definitions:
         type: string
       color:
         type: string
+      createdAt:
+        type: string
       id:
         type: integer
       name:
+        type: string
+      updatedAt:
         type: string
     type: object
   model.AddCatDto:
@@ -24,7 +28,7 @@ definitions:
       name:
         type: string
     type: object
-host: localhost:8080
+host: localhost:3000
 info:
   contact: {}
   description: This is a sample for Fiber Rest API
@@ -35,6 +39,27 @@ info:
   title: Go Fiber Example API
   version: "1.0"
 paths:
+  /api/v1/cat/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get cat by id
+      parameters:
+      - description: cat id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Cat'
+      summary: Get cat by id
+      tags:
+      - cat
   /api/v1/cat/add:
     post:
       consumes:

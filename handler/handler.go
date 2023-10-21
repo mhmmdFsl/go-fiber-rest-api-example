@@ -23,10 +23,13 @@ func NewHandler(cfg *HandlerCfg) {
 		CatService: cfg.CatService,
 	}
 
+	// handle swagger request
 	sw := h.App.Group("/swagger")
 	sw.Get("*", swagger.HandlerDefault)
 
+	// handle cat request
 	cat := h.App.Group("/api/v1/cat")
 	cat.Get("/hello", h.helloCat)
 	cat.Post("/add", h.addCat)
+	cat.Get("/:id", h.getCatById)
 }

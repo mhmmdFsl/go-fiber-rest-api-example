@@ -76,6 +76,38 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/cat/{id}": {
+            "get": {
+                "description": "Get cat by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cat"
+                ],
+                "summary": "Get cat by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "cat id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.Cat"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -91,10 +123,16 @@ const docTemplate = `{
                 "color": {
                     "type": "string"
                 },
+                "createdAt": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
                     "type": "string"
                 }
             }
@@ -122,7 +160,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "localhost:3000",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Go Fiber Example API",
