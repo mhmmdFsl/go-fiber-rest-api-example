@@ -78,3 +78,12 @@ func (h *handler) getCatById(ctx *fiber.Ctx) error {
 
 	return ctx.JSON(rs)
 }
+
+func (h *handler) getAllCat(ctx *fiber.Ctx) error {
+	cats, err := h.CatService.GetAll()
+	if err != nil {
+		return ctx.JSON(httperror.NewInternal(err))
+	}
+
+	return ctx.JSON(cats)
+}

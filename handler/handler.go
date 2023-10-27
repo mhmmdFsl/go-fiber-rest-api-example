@@ -32,4 +32,5 @@ func NewHandler(cfg *HandlerCfg) {
 	cat.Get("/hello", h.helloCat)
 	cat.Post("/add", h.addCat)
 	cat.Get("/:id", h.getCatById)
+	cat.Get("/", h.getAllCat)
 }

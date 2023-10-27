@@ -10,10 +10,21 @@ import (
 type CatRepository interface {
 	Save(cat *entity.Cat) (*entity.Cat, error)
 	FindById(id int) (*entity.Cat, error)
+	FindAll() ([]entity.Cat, error)
 }
 
 type catRepoSitoryImpl struct {
 	Db *gorm.DB
+}
+
+func (c *catRepoSitoryImpl) FindAll() ([]entity.Cat, error) {
+	var cat []entity.Cat
+	result := c.Db.Find(&cat)
+	if err := result.Error; err != nil {
+		return nil, err
+	}
+
+	return cat, nil
 }
 
 func (c *catRepoSitoryImpl) FindById(id int) (*entity.Cat, error) {

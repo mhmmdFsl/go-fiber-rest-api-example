@@ -18,6 +18,7 @@ import (
 const (
 	AddNewCat string = "AddNewCat"
 	GetById          = "GetById"
+	GetAll           = "GetAll"
 )
 
 func TestHandlerCat(t *testing.T) {
@@ -103,6 +104,25 @@ func TestHandlerCat(t *testing.T) {
 				ErrorType: httperror.NOT_FOUND,
 			},
 		},
+		{
+			description:    "get all cat",
+			route:          "/api/v1/cat",
+			expectedError:  false,
+			expectedCode:   200,
+			httpMethod:     "GET",
+			mockMethodName: GetAll,
+			mockExpectedResponse: []entity.Cat{
+				entity.Cat{
+					ID:        1,
+					Name:      "Test Cat",
+					Color:     "Black",
+					BirthAt:   time.Now(),
+					Breed:     "Persia",
+					CreatedAt: time.Now(),
+					UpdatedAt: time.Now(),
+				},
+			},
+		},
 	}
 
 	app := fiber.New()
@@ -128,6 +148,11 @@ func TestHandlerCat(t *testing.T) {
 			id, _ := strconv.Atoi(test.pathVariable)
 			rs := test.mockExpectedResponse.(entity.Cat)
 			mockService.On(test.mockMethodName, id).Return(&rs, test.mockExpectedError)
+		}
+
+		if test.mockMethodName == GetAll {
+			rs := test.mockExpectedResponse.([]entity.Cat)
+			mockService.On(test.mockMethodName).Return(rs, test.mockExpectedError)
 		}
 
 		j, _ := json.Marshal(test.requestBody)

@@ -9,10 +9,15 @@ import (
 type CatService interface {
 	AddNewCat(addCatDto *model.AddCatDto) (*entity.Cat, error)
 	GetById(id int) (*entity.Cat, error)
+	GetAll() ([]entity.Cat, error)
 }
 
 type catServiceImpl struct {
 	CatRepo repository.CatRepository
+}
+
+func (c catServiceImpl) GetAll() ([]entity.Cat, error) {
+	return c.CatRepo.FindAll()
 }
 
 func (c catServiceImpl) GetById(id int) (*entity.Cat, error) {
