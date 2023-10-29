@@ -33,4 +33,5 @@ func NewHandler(cfg *HandlerCfg) {
 	cat.Post("/add", h.addCat)
 	cat.Get("/:id", h.getCatById)
 	cat.Get("/", h.getAllCat)
+	cat.Delete("/:id", h.deleteCat)
 }

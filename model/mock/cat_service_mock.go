@@ -28,3 +28,8 @@ func (c *CatServiceMock) GetAll() ([]entity.Cat, error) {
 	args := c.Called()
 	return args.Get(0).([]entity.Cat), args.Error(1)
 }
+
+func (c *CatServiceMock) Delete(id int) error {
+	args := c.Called(id)
+	return args.Error(0)
+}

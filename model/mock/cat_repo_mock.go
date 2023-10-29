@@ -28,3 +28,8 @@ func (c *CatRepoMock) FindAll() ([]entity.Cat, error) {
 	args := c.Called()
 	return args.Get(0).([]entity.Cat), args.Error(1)
 }
+
+func (c *CatRepoMock) DeleteById(id int) error {
+	args := c.Called(id)
+	return args.Error(0)
+}

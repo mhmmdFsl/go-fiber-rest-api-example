@@ -124,6 +124,26 @@ func TestHandlerCat(t *testing.T) {
 				},
 			},
 		},
+		{
+			description:    "delete cat",
+			route:          "/api/v1/cat/1",
+			pathVariable: "1",
+			expectedError:  false,
+			expectedCode:   200,
+			httpMethod:     "DELETE",
+			mockMethodName: Delete,
+			mockExpectedError: nil,
+		},
+		{
+			description:    "delete cat should error",
+			route:          "/api/v1/cat/2",
+			pathVariable: "2",
+			expectedError:  false,
+			expectedCode:   404,
+			httpMethod:     "DELETE",
+			mockMethodName: Delete,
+			mockExpectedError: httperror.NewFailed("cat with id 1 not found", httperror.NOT_FOUND),
+		},
 	}
 
 	app := fiber.New()
@@ -154,6 +174,11 @@ func TestHandlerCat(t *testing.T) {
 		if test.mockMethodName == GetAll {
 			rs := test.mockExpectedResponse.([]entity.Cat)
 			mockService.On(test.mockMethodName).Return(rs, test.mockExpectedError)
+		}
+
+		if test.mockMethodName == Delete {
+			id, _ := strconv.Atoi(test.pathVariable)
+			mockService.On(test.mockMethodName, id).Return(test.mockExpectedError)
 		}
 
 		j, _ := json.Marshal(test.requestBody)

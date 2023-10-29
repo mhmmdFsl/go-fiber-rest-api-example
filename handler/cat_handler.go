@@ -4,6 +4,7 @@ import (
 	"errors"
 	"strconv"
 
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model/httperror"
@@ -91,8 +92,33 @@ func (h *handler) getCatById(ctx *fiber.Ctx) error {
 func (h *handler) getAllCat(ctx *fiber.Ctx) error {
 	cats, err := h.CatService.GetAll()
 	if err != nil {
-		return ctx.JSON(httperror.NewInternal(err))
+		var he *httperror.HttpError
+		if errors.As(err, &he) {
+			return ctx.Status(he.GetStatusCode()).JSON(he)
+		}
+		return ctx.Status(500).JSON(httperror.NewInternal(err))
 	}
 
 	return ctx.JSON(cats)
+}
+
+func (h *handler) deleteCat(ctx *fiber.Ctx) error {
+	param := ctx.Params("id")
+	id, err := strconv.Atoi(param)
+	if err != nil {
+		return ctx.JSON(httperror.NewFailed("failed to parse id", httperror.BAD_REQUEST))
+	}
+
+	err = h.CatService.Delete(id)
+	if err != nil {
+		var he *httperror.HttpError
+		if errors.As(err, &he) {
+			return ctx.Status(he.GetStatusCode()).JSON(he)
+		}
+		return ctx.Status(500).JSON(httperror.NewInternal(err))
+	}
+	return ctx.JSON(fiber.Map{
+		"status": "SUCCESS",
+		"message": fmt.Sprintf("Success delete cat with id %d", id),
+	})
 }
