@@ -2,10 +2,11 @@ package handler
 
 import (
 	"errors"
+	"strconv"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model/httperror"
-	"strconv"
 )
 
 // helloCat godoc
@@ -79,6 +80,14 @@ func (h *handler) getCatById(ctx *fiber.Ctx) error {
 	return ctx.JSON(rs)
 }
 
+// getAllCat godoc
+// @Summary      Get all cat
+// @Description  Get all cat
+// @Tags         cat
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  []entity.Cat
+// @Router       /api/v1/cat [get]
 func (h *handler) getAllCat(ctx *fiber.Ctx) error {
 	cats, err := h.CatService.GetAll()
 	if err != nil {

@@ -39,6 +39,23 @@ info:
   title: Go Fiber Example API
   version: "1.0"
 paths:
+  /api/v1/cat:
+    get:
+      consumes:
+      - application/json
+      description: Get all cat
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Cat'
+            type: array
+      summary: Get all cat
+      tags:
+      - cat
   /api/v1/cat/{id}:
     get:
       consumes:

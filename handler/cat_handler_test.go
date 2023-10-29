@@ -2,23 +2,24 @@ package handler
 
 import (
 	"encoding/json"
+	"net/http/httptest"
+	"strconv"
+	"strings"
+	"testing"
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model/entity"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model/httperror"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model/mock"
 	"github.com/stretchr/testify/assert"
-	"net/http/httptest"
-	"strconv"
-	"strings"
-	"testing"
-	"time"
 )
 
 const (
 	AddNewCat string = "AddNewCat"
-	GetById          = "GetById"
-	GetAll           = "GetAll"
+	GetById   string = "GetById"
+	GetAll    string = "GetAll"
 )
 
 func TestHandlerCat(t *testing.T) {
@@ -112,7 +113,7 @@ func TestHandlerCat(t *testing.T) {
 			httpMethod:     "GET",
 			mockMethodName: GetAll,
 			mockExpectedResponse: []entity.Cat{
-				entity.Cat{
+				{
 					ID:        1,
 					Name:      "Test Cat",
 					Color:     "Black",

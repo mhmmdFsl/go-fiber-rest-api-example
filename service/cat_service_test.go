@@ -1,19 +1,20 @@
 package service
 
 import (
+	"testing"
+	"time"
+
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model/entity"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model/httperror"
 	"github.com/mhmmdFsl/go-fiber-rest-api-example/model/mock"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
 )
 
 const (
 	Save     string = "Save"
-	FindById        = "FindById"
-	FindAll         = "FindAll"
+	FindById string = "FindById"
+	FindAll  string = "FindAll"
 )
 
 func TestAddCatService(t *testing.T) {
@@ -179,7 +180,7 @@ func TestGetAllCat(t *testing.T) {
 			description:    "get all cat",
 			mockMethodName: FindAll,
 			mockExpectedResponse: []entity.Cat{
-				entity.Cat{
+				{
 					ID:        1,
 					Name:      "Test Cat",
 					Breed:     "Kampung",

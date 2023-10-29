@@ -20,6 +20,32 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/cat": {
+            "get": {
+                "description": "Get all cat",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cat"
+                ],
+                "summary": "Get all cat",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Cat"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/cat/add": {
             "post": {
                 "description": "Add new cat data",
